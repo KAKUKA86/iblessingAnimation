@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service
 
 @Service
 interface NormalUserService {
-    fun normalUserLogin(noUsername: String, noUserPassword: String): NoUserResult?
+    fun normalUserLogin(noUsername: String, noUserPassword: String): NoUserResult
 }

@@ -6,7 +6,7 @@ import com.iblessing.iblessinganimation.service.NormalUserService
 import com.iblessing.iblessinganimation.util.NoUserResult
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
-import java.util.Objects
+import java.util.*
 
 @Service
 class NormalUserServiceImpl : NormalUserService {
@@ -14,9 +14,9 @@ class NormalUserServiceImpl : NormalUserService {
     private var mapper: NormalUserMapper? = null
 
     override fun normalUserLogin(noUsername: String, noUserPassword: String): NoUserResult {
-        println("service处$noUsername")
+        println("service处 $noUsername")
         val user: User? = mapper?.queryNormalUserByUserName(noUsername)
-        println("service出库${user?.noUsername}")
+        println("service出库 ${user?.noUsername}")
         return if (Objects.isNull(user)) {
             println("该用户不存在")
             NoUserResult(400, "002", "用户不存在", null)
