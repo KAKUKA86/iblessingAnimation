@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @CrossOrigin
+@RequestMapping("/noUser")
 class NormalUserController {
     @Resource
     val service: NormalUserService? = null
@@ -27,10 +28,21 @@ class NormalUserController {
         return service?.normalUserLogin(noUsername, noUserPassword)
     }
 
+    @PostMapping("/signIn")
+    fun userSignIn(@RequestBody user: User): NoUserResult? {
+        user.noUsername
+        user.noUserPassword
+        user.noGender
+        user.noBirthday
+        user.noEmail
+        println("Controller处数据："+user.noUsername)
+        return service?.normalUserSignIn(user)
+    }
+
     /**
      * 测试接口
      */
-    @RequestMapping("/")
+    @RequestMapping("/test")
     fun hello(): String {
         return "hello world"
     }

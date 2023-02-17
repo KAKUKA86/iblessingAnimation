@@ -3,6 +3,7 @@ package com.iblessing.iblessinganimation.pojo
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
+import java.sql.Timestamp
 
 @Data
 @AllArgsConstructor
@@ -13,8 +14,8 @@ class User {
     var noUserPassword: String = ""
     var noGender: String = ""
     var noBirthday: String = ""
-    var noSignIn: Long = 0
-    var noLogin: Long = 0
+    var noSignIn: Timestamp? = null
+    var noLogin: Timestamp? = null
     var noUserExp: Int = 0
     var noEmail: String = ""
 }
