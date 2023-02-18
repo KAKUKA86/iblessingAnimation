@@ -1,5 +1,6 @@
 package com.iblessing.iblessinganimation.controller
 
+import com.iblessing.iblessinganimation.pojo.Favorites
 import com.iblessing.iblessinganimation.pojo.User
 import com.iblessing.iblessinganimation.service.NormalUserService
 import com.iblessing.iblessinganimation.util.NoUserResult
@@ -28,15 +29,22 @@ class NormalUserController {
         return service?.normalUserLogin(noUsername, noUserPassword)
     }
 
+    /**
+     * 普通用户注册
+     */
     @PostMapping("/signIn")
     fun userSignIn(@RequestBody user: User): NoUserResult? {
-        user.noUsername
-        user.noUserPassword
-        user.noGender
-        user.noBirthday
-        user.noEmail
-        println("Controller处数据："+user.noUsername)
         return service?.normalUserSignIn(user)
+    }
+
+    /**
+     * 普通用户收藏表
+     * @param favorites 填写的收藏表数据
+     * @author 14717
+     */
+    @RequestMapping("/favoriteTest")
+    fun userFavorite(@RequestBody favorites: Favorites): NoUserResult? {
+        return service?.normalUserFavorite(favorites)
     }
 
     /**
