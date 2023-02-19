@@ -4,6 +4,7 @@ import com.iblessing.iblessinganimation.dao.NormalUserMapper
 import com.iblessing.iblessinganimation.pojo.Favorites
 import com.iblessing.iblessinganimation.pojo.User
 import com.iblessing.iblessinganimation.service.NormalUserService
+import com.iblessing.iblessinganimation.util.NoFavResult
 import com.iblessing.iblessinganimation.util.NoUserResult
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
@@ -67,17 +68,36 @@ class NormalUserServiceImpl : NormalUserService {
         }
     }
 
-    override fun normalUserFavorite(favorites: Favorites): NoUserResult? {
+    /**
+     * 用户收藏功能
+     */
+    override fun normalUserFavorite(favorites: Favorites): NoFavResult? {
         val noId: Int = favorites.noId
-        val arId: Int = favorites.noId
+        val arId: Int = favorites.arId
         val faTime = Timestamp(System.currentTimeMillis())
-        return if (mapper?.queryNorUserFavByNoIdAndArId(noId, arId) != null) {
+        val noFavorites: Favorites? = mapper?.queryNorUserFavByNoIdAndArId(noId, arId)
+        return if (Objects.isNull(noFavorites)) { //需要更改
             mapper?.addNorUserFav(noId, arId, faTime)
-            NoUserResult(200, "200", "收藏成功", null)
-        } else {
-            NoUserResult(200, "200", "收藏失败", null)
+            NoFavResult(200, "200", "收藏成功", null)
 
+        } else {
+            println("收藏记录已存在或收藏失败")
+            NoFavResult(400, "400", "收藏失败", noFavorites)
         }
 
+    }
+
+    /**
+     * 用户查询收藏状态
+     */
+    override fun queryFavorite(favorites: Favorites): NoFavResult? {
+        val noId = favorites.noId
+//        val noFavorites: List<Favorites>? = mapper?.queryNorUserFavByNoId(noId)
+        TODO("之后再说")
+//        return if (Objects.isNull(noFavorites)) {
+//            NoFavResult(400, "400", "查询失败", null)
+//        } else {
+//            NoFavResult(500, "500", "查询成功", noFavorites)
+//        }
     }
 }

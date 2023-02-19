@@ -3,6 +3,7 @@ package com.iblessing.iblessinganimation.controller
 import com.iblessing.iblessinganimation.pojo.Favorites
 import com.iblessing.iblessinganimation.pojo.User
 import com.iblessing.iblessinganimation.service.NormalUserService
+import com.iblessing.iblessinganimation.util.NoFavResult
 import com.iblessing.iblessinganimation.util.NoUserResult
 import jakarta.annotation.Resource
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -38,15 +39,21 @@ class NormalUserController {
     }
 
     /**
-     * 普通用户收藏表
+     * 查询用户的收藏表
+     */
+    @RequestMapping("/queryFavorite")
+    fun queryUserFavorite(@RequestBody favorites: Favorites): NoFavResult? {
+        return service?.queryFavorite(favorites)
+    }
+    /**
+     * 新增普通用户收藏表
      * @param favorites 填写的收藏表数据
      * @author 14717
      */
-    @RequestMapping("/favoriteTest")
-    fun userFavorite(@RequestBody favorites: Favorites): NoUserResult? {
+    @RequestMapping("/addFavoriteTest")
+    fun addUserFavorite(@RequestBody favorites: Favorites): NoFavResult? {
         return service?.normalUserFavorite(favorites)
     }
-
     /**
      * 测试接口
      */

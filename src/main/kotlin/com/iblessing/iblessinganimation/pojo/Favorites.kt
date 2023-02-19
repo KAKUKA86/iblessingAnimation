@@ -3,6 +3,7 @@ package com.iblessing.iblessinganimation.pojo
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
+import java.sql.Timestamp
 
 @Data
 @AllArgsConstructor
@@ -11,5 +12,5 @@ class Favorites {
     var faId : Int = 0
     var noId : Int = 0
     var arId : Int = 0
-    var faTime : Long = 0
+    var faTime : Timestamp? = null
 }

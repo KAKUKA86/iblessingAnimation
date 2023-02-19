@@ -1,5 +1,6 @@
 package com.iblessing.iblessinganimation.dao
 
+import com.iblessing.iblessinganimation.pojo.Favorites
 import com.iblessing.iblessinganimation.pojo.User
 import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
@@ -33,10 +34,11 @@ interface NormalUserMapper {
     @Select(
         "select * from n_favorites where no_id = #{noId} and ar_id = #{arId}"
     )
-    fun queryNorUserFavByNoIdAndArId(noId: Int, arId: Int)
+    fun queryNorUserFavByNoIdAndArId(noId: Int, arId: Int) : Favorites
 
     @Insert(
-        "insert into n_favorites (no_id , ar_id , fa_time) values = (#{noId} , #{arId} , #{faTime})"
+        "insert into n_favorites (no_id , ar_id , fa_time) values (#{noId} , #{arId} , #{faTime})"
     )
     fun addNorUserFav(noId: Int, arId: Int, faTime: Timestamp)
+    fun queryNorUserFavByNoId(noId: Int): Favorites
 }
