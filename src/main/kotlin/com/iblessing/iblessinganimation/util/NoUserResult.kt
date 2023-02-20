@@ -1,9 +1,7 @@
 package com.iblessing.iblessinganimation.util
 
 import com.iblessing.iblessinganimation.pojo.User
-import lombok.AllArgsConstructor
 
-@AllArgsConstructor
 
 class NoUserResult(
     var statusCode: Int,

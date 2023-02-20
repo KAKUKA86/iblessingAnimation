@@ -1,18 +1,15 @@
 package com.iblessing.iblessinganimation.util
 
-import com.iblessing.iblessinganimation.pojo.Favorites
+import com.iblessing.iblessinganimation.pojo.Article
 
-
-class NoFavResult(
+class NoArticleResult(
     var statusCode: Int,
     var code: String,
     var message: String,
-    var noFavorites: Favorites?,
-    var noFavoritesList: List<Favorites>?
+    var article: Article?,
+    var articleList: List<Article>?
 ) {
-
     override fun toString(): String {
         return super.toString()
     }
-
 }
