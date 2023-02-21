@@ -1,22 +1,10 @@
 package com.iblessing.iblessinganimation.controller
 
-import com.iblessing.iblessinganimation.pojo.Article
-import com.iblessing.iblessinganimation.pojo.Comment
-import com.iblessing.iblessinganimation.pojo.Favorites
-import com.iblessing.iblessinganimation.pojo.User
+import com.iblessing.iblessinganimation.pojo.*
 import com.iblessing.iblessinganimation.service.NormalUserService
-import com.iblessing.iblessinganimation.util.NoArticleResult
-import com.iblessing.iblessinganimation.util.NoComResult
-import com.iblessing.iblessinganimation.util.NoFavResult
-import com.iblessing.iblessinganimation.util.NoUserResult
+import com.iblessing.iblessinganimation.util.*
 import jakarta.annotation.Resource
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.DeleteMapping
-
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin
@@ -122,4 +110,38 @@ class NormalUserController {
     fun queComment(@RequestBody comment: Comment): NoComResult? {
         return service?.queryCommonByNoId(comment)
     }
+    //以下未测试
+    /**
+     * 用户新增举报记录
+     */
+    @RequestMapping("/addReport")
+    fun addReport(@RequestBody report: Report): NoReportResult? {
+        return service?.addReport(report)
+    }
+
+    /**
+     * 用户删除举报记录
+     */
+    @RequestMapping("/delReport")
+    fun delReport(@RequestBody report: Report): NoReportResult? {
+        return service?.deleteReport(report)
+    }
+
+    /**
+     * 用户修改记录
+     */
+    @RequestMapping("/updReport")
+    fun updReport(@RequestBody report: Report): NoReportResult? {
+        return service?.updateReport(report)
+    }
+
+    /**
+     * 用户查询举报记录
+     */
+    @RequestMapping("/queReport")
+    fun queReport(@RequestBody report: Report): NoReportResult? {
+        return service?.queryReportByNoId(report)
+    }
+
+
 }

@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class IblessingAnimationApplication
 
 fun main(args: Array<String>) {
-	runApplication<IblessingAnimationApplication>(*args)
+    runApplication<IblessingAnimationApplication>(*args)
 }

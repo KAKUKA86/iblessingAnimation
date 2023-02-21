@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 class System {
-    var syId : Int = 0
-    var syTime : Long = 0
-    var syContent : String = ""
-    var syTimeLimit : Int = 0
-    var adId : Int = 0
+    var syId: Int = 0
+    var syTime: Long = 0
+    var syContent: String = ""
+    var syTimeLimit: Int = 0
+    var adId: Int = 0
 }

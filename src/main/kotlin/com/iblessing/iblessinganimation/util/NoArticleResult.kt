@@ -9,7 +9,4 @@ class NoArticleResult(
     var article: Article?,
     var articleList: List<Article>?
 ) {
-    override fun toString(): String {
-        return super.toString()
-    }
 }

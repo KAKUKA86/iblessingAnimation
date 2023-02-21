@@ -1,17 +1,12 @@
 package com.iblessing.iblessinganimation.service.impl
 
 import com.iblessing.iblessinganimation.dao.NormalUserMapper
-import com.iblessing.iblessinganimation.pojo.Article
-import com.iblessing.iblessinganimation.pojo.Comment
-import com.iblessing.iblessinganimation.pojo.Favorites
-import com.iblessing.iblessinganimation.pojo.User
+import com.iblessing.iblessinganimation.pojo.*
 import com.iblessing.iblessinganimation.service.NormalUserService
-import com.iblessing.iblessinganimation.util.NoArticleResult
-import com.iblessing.iblessinganimation.util.NoComResult
-import com.iblessing.iblessinganimation.util.NoFavResult
-import com.iblessing.iblessinganimation.util.NoUserResult
+import com.iblessing.iblessinganimation.util.*
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
+import java.lang.System
 import java.sql.Timestamp
 import java.util.*
 
@@ -33,7 +28,6 @@ class NormalUserServiceImpl : NormalUserService {
             NoUserResult(400, "002", "用户不存在", null)
         } else {
             println("用户存在条件")
-            NoUserResult(200, "001", "登录成功", user)
             if (Objects.equals(user?.noUserPassword, noUserPassword)) {
                 println(user?.noUsername + "登陆成功，写入登录时间")
                 mapper?.updateNormalUserLoginTime(noUsername, noLogin)
@@ -207,7 +201,7 @@ class NormalUserServiceImpl : NormalUserService {
         val arId = comment.arId
         val time = Timestamp(System.currentTimeMillis())
         comment.coTime = time
-        return if (mapper?.delComment(noId, arId) != 0) {
+        return if (mapper?.delCommentByNoIdAndArId(noId, arId) != 0) {
             println("删除成功")
             NoComResult(500, "500", "删除成功,删除时间为$time", comment, null)
         } else {
@@ -246,4 +240,63 @@ class NormalUserServiceImpl : NormalUserService {
         }
 
     }
+
+    /**
+     * 普通用户新增举报
+     */
+    override fun addReport(report: Report): NoReportResult? {
+        val noId = report.noId
+        val arId = report.arId
+        val reType = report.reType
+        val reContent = report.reContent
+        //直接添加
+        return if (mapper?.addReport(noId, arId, reType, reContent) != 0) {
+            NoReportResult(500, "500", "添加成功", null, null)
+        } else {
+            NoReportResult(400, "400", "添加失败", null, null)
+        }
+    }
+
+    /**
+     * 通过用户ID和文章删除删除
+     */
+    override fun deleteReport(report: Report): NoReportResult? {
+        val noId = report.noId
+        val arId = report.arId
+        return if (mapper?.deleteReportByNoIdAndArId(noId, arId) != 0) {
+            NoReportResult(500, "500", "删除成功", report, null)
+        } else {
+            NoReportResult(400, "400", "删除失败", report, null)
+        }
+    }
+
+    /**
+     * 用户修改内容
+     */
+    override fun updateReport(report: Report): NoReportResult? {
+        val noId = report.noId
+        val arId = report.arId
+        val reType = report.reType
+        val reContent = report.reContent
+        return if (mapper?.updateReportByNoIdAndArId(noId, arId, reType, reContent) != 0) {
+            NoReportResult(500, "500", "修改成功", report, null)
+        } else {
+            NoReportResult(400, "400", "修改失败", report, null)
+        }
+    }
+
+    /**
+     * 通过ID查询举报内容
+     */
+    override fun queryReportByNoId(report: Report): NoReportResult? {
+        val noId = report.noId
+        val reportList = mapper?.queryReportByNoId(noId)
+        return if (Objects.nonNull(reportList)) {
+            NoReportResult(500, "500", "查询成功", null, reportList)
+        } else {
+            NoReportResult(400, "400", "查询失败", null, null)
+        }
+    }
+
+
 }

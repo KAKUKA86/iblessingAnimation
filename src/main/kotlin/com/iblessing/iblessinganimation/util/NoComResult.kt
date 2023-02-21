@@ -10,7 +10,4 @@ class NoComResult(
     var comment: Comment?,
     var commentList: List<Comment>?
 ) {
-    override fun toString(): String {
-        return super.toString()
-    }
 }

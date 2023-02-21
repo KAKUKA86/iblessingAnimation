@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class AdminUser{
-    var adId : Int = 0
-    var adUserName : String = ""
-    var adUserPassword : String = ""
+class AdminUser {
+    var adId: Int = 0
+    var adUsername: String = ""
+    var adUserPassword: String = ""
 }

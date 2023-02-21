@@ -1,13 +1,7 @@
 package com.iblessing.iblessinganimation.service
 
-import com.iblessing.iblessinganimation.pojo.Article
-import com.iblessing.iblessinganimation.pojo.Comment
-import com.iblessing.iblessinganimation.pojo.Favorites
-import com.iblessing.iblessinganimation.pojo.User
-import com.iblessing.iblessinganimation.util.NoArticleResult
-import com.iblessing.iblessinganimation.util.NoComResult
-import com.iblessing.iblessinganimation.util.NoFavResult
-import com.iblessing.iblessinganimation.util.NoUserResult
+import com.iblessing.iblessinganimation.pojo.*
+import com.iblessing.iblessinganimation.util.*
 import org.springframework.stereotype.Service
 
 @Service
@@ -24,7 +18,12 @@ interface NormalUserService {
     fun deleteComment(comment: Comment): NoComResult?
     fun updateComment(comment: Comment): NoComResult?
     fun queryCommonByNoId(comment: Comment): NoComResult?
+    fun addReport(report: Report): NoReportResult?
+    fun deleteReport(report: Report): NoReportResult?
+    fun updateReport(report: Report): NoReportResult?
+    fun queryReportByNoId(report: Report): NoReportResult?
 
 
 }
+
 

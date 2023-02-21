@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 class Lexicon {
-    var leId : Int = 0
-    var leWord : String = ""
-    var leCreationTime : Long = 0
-    var leNumber : Int = 0
-    var auId : Int = 0
+    var leId: Int = 0
+    var leWord: String = ""
+    var leCreationTime: Long = 0
+    var leNumber: Int = 0
+    var auId: Int = 0
 }

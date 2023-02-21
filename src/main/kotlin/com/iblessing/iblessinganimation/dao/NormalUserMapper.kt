@@ -1,14 +1,7 @@
 package com.iblessing.iblessinganimation.dao
 
-import com.iblessing.iblessinganimation.pojo.Article
-import com.iblessing.iblessinganimation.pojo.Comment
-import com.iblessing.iblessinganimation.pojo.Favorites
-import com.iblessing.iblessinganimation.pojo.User
-import org.apache.ibatis.annotations.Delete
-import org.apache.ibatis.annotations.Insert
-import org.apache.ibatis.annotations.Mapper
-import org.apache.ibatis.annotations.Select
-import org.apache.ibatis.annotations.Update
+import com.iblessing.iblessinganimation.pojo.*
+import org.apache.ibatis.annotations.*
 import java.sql.Timestamp
 
 @Mapper
@@ -83,15 +76,42 @@ interface NormalUserMapper {
     @Delete(
         "delete from n_comment where no_id = #{noId} and ar_id = #{arId}"
     )
-    fun delComment(noId: Int, arId: Int): Int
+    fun delCommentByNoIdAndArId(noId: Int, arId: Int): Int
+
     @Update(
         "update n_comment " +
                 "set co_content = #{coContent} , co_time = #{coTime} " +
                 "where no_id = #{noId} and ar_id = #{arId}"
     )
     fun updateComment(noId: Int, arId: Int, coContent: String, coTime: Timestamp): Int
+
     @Select(
         "select * from n_comment where no_id = #{noId}"
     )
     fun queryCommentByNoId(noId: Int): List<Comment>
+
+    @Insert(
+        "insert into n_report (no_id, ar_id, re_type, re_content)" +
+                "values (#{noId} , #{arId} , #{reType} , #{reContent})"
+    )
+    fun addReport(noId: Int, arId: Int, reType: String, reContent: String): Int
+
+    @Delete(
+        "delete from n_report where no_id = #{noId} and ar_id = #{arId}"
+    )
+    fun deleteReportByNoIdAndArId(noId: Int, arId: Int): Int
+
+    @Update(
+        "update n_report " +
+                "set re_type = #{reType} , re_Content = #{reContent}" +
+                "where no_id = #{noId} , ar_id = #{arId}"
+    )
+    fun updateReportByNoIdAndArId(noId: Int, arId: Int, reType: String, reContent: String): Int
+
+    @Select(
+        "select * from n_report where no_id = #{noId}"
+    )
+    fun queryReportByNoId(noId: Int): List<Report>
+
+
 }

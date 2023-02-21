@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class AudiUser{
-    var auId : Int = 0
-    var auUsername : String = ""
-    var auPassword : String = ""
+class AudiUser {
+    var auId: Int = 0
+    var auUsername: String = ""
+    var auPassword: String = ""
 
 }

@@ -11,8 +11,4 @@ class NoFavResult(
     var noFavoritesList: List<Favorites>?
 ) {
 
-    override fun toString(): String {
-        return super.toString()
-    }
-
 }

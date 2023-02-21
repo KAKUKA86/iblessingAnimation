@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 class Report {
-    var reId : Int = 0
-    var noId : Int = 0
-    var arId : Int = 0
-    var reType : String = ""
-    var reContent : String = ""
+    var reId: Int = 0
+    var noId: Int = 0
+    var arId: Int = 0
+    var reType: String = ""
+    var reContent: String = ""
 }

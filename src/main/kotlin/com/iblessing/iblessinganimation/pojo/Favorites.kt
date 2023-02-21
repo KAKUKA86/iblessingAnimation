@@ -9,8 +9,8 @@ import java.sql.Timestamp
 @AllArgsConstructor
 @NoArgsConstructor
 class Favorites {
-    var faId : Int = 0
-    var noId : Int = 0
-    var arId : Int = 0
-    var faTime : Timestamp? = null
+    var faId: Int = 0
+    var noId: Int = 0
+    var arId: Int = 0
+    var faTime: Timestamp? = null
 }
