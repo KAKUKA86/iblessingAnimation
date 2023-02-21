@@ -3,6 +3,7 @@ package com.iblessing.iblessinganimation.pojo
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
+import java.sql.Timestamp
 
 @Data
 @AllArgsConstructor
@@ -10,7 +11,6 @@ import lombok.NoArgsConstructor
 class Partition {
     var paId: Int = 0
     var paName: String = ""
-    var paCreationTime: Long = 0
-    var paStatus: String = ""
-    var auId: Int = 0
+    var paCreationTime: Timestamp? = null
+    var adId: Int = 0
 }
