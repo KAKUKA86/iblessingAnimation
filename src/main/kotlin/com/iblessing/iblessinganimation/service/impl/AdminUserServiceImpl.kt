@@ -2,8 +2,12 @@ package com.iblessing.iblessinganimation.service.impl
 
 import com.iblessing.iblessinganimation.dao.AdminUserMapper
 import com.iblessing.iblessinganimation.pojo.AdminUser
+import com.iblessing.iblessinganimation.pojo.Announcement
+import com.iblessing.iblessinganimation.pojo.Lexicon
 import com.iblessing.iblessinganimation.pojo.Partition
 import com.iblessing.iblessinganimation.service.AdminUserService
+import com.iblessing.iblessinganimation.util.AdAnnounceResult
+import com.iblessing.iblessinganimation.util.AdLexiconResult
 import com.iblessing.iblessinganimation.util.AdPartitionResult
 import com.iblessing.iblessinganimation.util.AdUserResult
 import jakarta.annotation.Resource
@@ -47,16 +51,67 @@ class AdminUserServiceImpl : AdminUserService {
     }
 
     override fun addPartition(partition: Partition): AdPartitionResult? {
-        return if(mapper?.queryPartitionByPaName(partition.paName) == 0) {
+        return if (mapper?.queryPartitionByPaName(partition.paName) == 0) {
             println("通过重复验证")
-            AdPartitionResult(400, "400" ,"名称已经存在" , partition,null)
-        }else {
+            AdPartitionResult(400, "400", "名称已经存在", partition, null)
+        } else {
             partition.paCreationTime = Timestamp(System.currentTimeMillis())
-            if (mapper?.addPartition(partition.paName,partition.adId, partition.paCreationTime!!) != 0){
-                AdPartitionResult(500,"500","新增成功",partition,null)
-            }else{
-                AdPartitionResult(400,"400","新增失败",partition,null)
+            if (mapper?.addPartition(partition.paName, partition.adId, partition.paCreationTime!!) != 0) {
+                AdPartitionResult(500, "500", "新增成功", partition, null)
+            } else {
+                AdPartitionResult(400, "400", "新增失败", partition, null)
             }
         }
     }
+
+    override fun updatePartition(partition: Partition): AdPartitionResult? {
+        val paName = partition.paName
+        val paCreationTime = Timestamp(System.currentTimeMillis())
+        val adId = partition.adId
+        val paId = partition.paId
+        return if (mapper?.updatePartition(paName, paCreationTime, adId, paId) != 0) {
+            AdPartitionResult(500, "500", "修改成功", partition, null)
+        } else {
+            AdPartitionResult(400, "400", "修改失败", partition, null)
+        }
+    }
+
+    override fun deletePartition(partition: Partition): AdPartitionResult? {
+        val paId = partition.paId
+        return if (mapper?.deletePartition(paId) != 0) {
+            AdPartitionResult(500, "500", "删除成功", null, null)
+        } else {
+            AdPartitionResult(400, "400", "删除失败", partition, null)
+        }
+    }
+
+    override fun queryAllLexicon(lexicon: Lexicon): AdLexiconResult? {
+        TODO("Not yet implemented")
+    }
+
+    override fun addLexicon(lexicon: Lexicon): AdLexiconResult? {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteLexicon(lexicon: Lexicon): AdLexiconResult? {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateLexicon(lexicon: Lexicon): AdLexiconResult? {
+        TODO("Not yet implemented")
+    }
+
+    override fun queryAllAnnouncement(announcement: Announcement): AdAnnounceResult? {
+        TODO("Not yet implemented")
+    }
+
+    override fun addAnnouncement(announcement: Announcement): AdAnnounceResult? {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteAnnouncement(announcement: Announcement): AdAnnounceResult? {
+        TODO("Not yet implemented")
+    }
+
+
 }

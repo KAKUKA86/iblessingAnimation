@@ -110,15 +110,16 @@ class NormalUserController {
     fun queComment(@RequestBody comment: Comment): NoComResult? {
         return service?.queryCommonByNoId(comment)
     }
-    //以下未测试
+
     /**
      * 用户新增举报记录
      */
-    @RequestMapping("/addReport")
+    @RequestMapping("/addReport") // 得接收报错
     fun addReport(@RequestBody report: Report): NoReportResult? {
         return service?.addReport(report)
     }
 
+    //以下未测试
     /**
      * 用户删除举报记录
      */

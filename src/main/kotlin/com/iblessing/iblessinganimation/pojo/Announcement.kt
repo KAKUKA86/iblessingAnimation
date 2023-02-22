@@ -3,14 +3,15 @@ package com.iblessing.iblessinganimation.pojo
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
+import java.sql.Timestamp
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class System {
-    var syId: Int = 0
-    var syTime: Long = 0
-    var syContent: String = ""
-    var syTimeLimit: Int = 0
+class Announcement {
+    var anId: Int = 0
+    var anTime: Timestamp? = null
+    var anContent: String = ""
+    var anTimeLimit: Int = 0
     var adId: Int = 0
 }
