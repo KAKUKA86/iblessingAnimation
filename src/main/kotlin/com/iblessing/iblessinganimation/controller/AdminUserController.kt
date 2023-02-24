@@ -1,9 +1,6 @@
 package com.iblessing.iblessinganimation.controller
 
-import com.iblessing.iblessinganimation.pojo.AdminUser
-import com.iblessing.iblessinganimation.pojo.Lexicon
-import com.iblessing.iblessinganimation.pojo.Partition
-import com.iblessing.iblessinganimation.pojo.Announcement
+import com.iblessing.iblessinganimation.pojo.*
 import com.iblessing.iblessinganimation.service.AdminUserService
 import com.iblessing.iblessinganimation.util.*
 import jakarta.annotation.Resource
@@ -104,8 +101,8 @@ class AdminUserController {
     /**
      * 管理员删除系统维护信息
      */
-    @RequestMapping("delAnnounce")
-    fun delAnnounce (@RequestBody announcement: Announcement) : AdAnnounceResult? {
+    @RequestMapping("/delAnnounce")
+    fun deleteAnnounce (@RequestBody announcement: Announcement) : AdAnnounceResult? {
         return service?.deleteAnnouncement(announcement)
     }
 
@@ -113,7 +110,33 @@ class AdminUserController {
      * 管理员修改系统 （原则上禁止更改）
      */
 
+
     /**
      * 管理员查询审核员信息
      */
+    @RequestMapping("/queAudi")
+    fun queryAuditor(@RequestBody audiUser: AudiUser): AdAuditorResult? {
+        return service?.queryAllAuditor(audiUser)
+    }
+    /**
+     * 管理员新增审核员
+     */
+    @RequestMapping("/addAudi")
+    fun addAuditor(@RequestBody audiUser: AudiUser): AdAuditorResult? {
+        return service?.addAuditor(audiUser)
+    }
+    /**
+     * 管理员删除审核员
+     */
+    @RequestMapping("/delAudi")
+    fun deleteAuditor(@RequestBody audiUser: AudiUser): AdAuditorResult?{
+        return service?.deleteAuditor(audiUser)
+    }
+    /**
+     * 管理员修改审核员信息
+     */
+    @RequestMapping("/updAudi")
+    fun updateAuditor(@RequestBody audiUser: AudiUser): AdAuditorResult?{
+        return service?.updateAuditor(audiUser)
+    }
 }

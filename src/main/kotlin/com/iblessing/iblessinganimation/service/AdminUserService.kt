@@ -1,12 +1,10 @@
 package com.iblessing.iblessinganimation.service
 
 import com.iblessing.iblessinganimation.pojo.Announcement
+import com.iblessing.iblessinganimation.pojo.AudiUser
 import com.iblessing.iblessinganimation.pojo.Lexicon
 import com.iblessing.iblessinganimation.pojo.Partition
-import com.iblessing.iblessinganimation.util.AdAnnounceResult
-import com.iblessing.iblessinganimation.util.AdLexiconResult
-import com.iblessing.iblessinganimation.util.AdPartitionResult
-import com.iblessing.iblessinganimation.util.AdUserResult
+import com.iblessing.iblessinganimation.util.*
 import org.springframework.stereotype.Service
 
 @Service
@@ -23,5 +21,9 @@ interface AdminUserService {
     fun queryAllAnnouncement(announcement: Announcement): AdAnnounceResult?
     fun addAnnouncement(announcement: Announcement): AdAnnounceResult?
     fun deleteAnnouncement(announcement: Announcement): AdAnnounceResult?
+    fun queryAllAuditor(audiUser: AudiUser): AdAuditorResult?
+    fun addAuditor(audiUser: AudiUser): AdAuditorResult?
+    fun deleteAuditor(audiUser: AudiUser): AdAuditorResult?
+    fun updateAuditor(audiUser: AudiUser): AdAuditorResult?
 }
 
