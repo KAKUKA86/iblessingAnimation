@@ -7,7 +7,8 @@ class NoUserResult(
     var statusCode: Int,
     var code: String,
     var message: String,
-    var user: User?
+    var user: User?,
+    var userList: List<User>?
 ) {
     override fun toString(): String {
         return "NoUserResult(statusCode=$statusCode, code='$code', message='$message', user=$user)"

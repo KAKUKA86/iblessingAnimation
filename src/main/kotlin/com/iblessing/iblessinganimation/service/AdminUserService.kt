@@ -1,9 +1,6 @@
 package com.iblessing.iblessinganimation.service
 
-import com.iblessing.iblessinganimation.pojo.Announcement
-import com.iblessing.iblessinganimation.pojo.AudiUser
-import com.iblessing.iblessinganimation.pojo.Lexicon
-import com.iblessing.iblessinganimation.pojo.Partition
+import com.iblessing.iblessinganimation.pojo.*
 import com.iblessing.iblessinganimation.util.*
 import org.springframework.stereotype.Service
 
@@ -25,5 +22,7 @@ interface AdminUserService {
     fun addAuditor(audiUser: AudiUser): AdAuditorResult?
     fun deleteAuditor(audiUser: AudiUser): AdAuditorResult?
     fun updateAuditor(audiUser: AudiUser): AdAuditorResult?
+    fun queryAllAuditorArticle(article: Article): AdArticleResult?
+    fun updateAuditorArticle(article: Article): AdArticleResult?
 }
 

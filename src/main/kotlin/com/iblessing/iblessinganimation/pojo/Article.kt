@@ -11,9 +11,11 @@ import java.sql.Timestamp
 class Article {
     var arId: Int = 0
     var noId: Int = 0
+    var paId: Int = 0
     var arTitle: String = ""
     var arContent: String = ""
     var arTime: Timestamp? = null
     var arView: Int = 0
     var arStatus: Int = 0
+    var auId: Int = 0
 }

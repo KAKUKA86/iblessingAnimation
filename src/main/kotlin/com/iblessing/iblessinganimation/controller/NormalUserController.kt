@@ -46,7 +46,20 @@ class NormalUserController {
     fun addUserFavorite(@RequestBody favorites: Favorites): NoFavResult? {
         return service?.addUserFavorite(favorites)
     }
-
+    /**
+     * 删除普通用户收藏表
+     */
+    @RequestMapping("/delFavorite")
+    fun delUserFavorite(@RequestBody favorites: Favorites): NoFavResult? {
+        return service?.deleteUserFavorite(favorites)
+    }
+    /**
+     * 用户查询文章分区
+     */
+    @RequestMapping("/queArtPart")
+    fun queryArticlePartition(@RequestBody partition: Partition): NoPartitionResult? {
+        return service?.queryArticlePartition(partition)
+    }
     /**
      * 用户新增文章
      */

@@ -33,20 +33,27 @@ interface NormalUserMapper {
     fun queryNorUserFavByNoIdAndArId(noId: Int, arId: Int): Favorites
 
     @Insert(
-        "insert into n_favorites (no_id , ar_id , fa_time) values (#{noId} , #{arId} , #{faTime})"
+        "insert into n_favorites (no_id , ar_id , fa_time) " +
+                "values (#{noId} , #{arId} , #{faTime})"
     )
-    fun addNorUserFav(noId: Int, arId: Int, faTime: Timestamp)
+    fun insertNorUserFav(noId: Int, arId: Int, faTime: Timestamp)
+
 
     @Select(
         "select * from n_favorites where no_id = #{noId}"
     )
     fun queryNorUserFavByNoId(noId: Int): List<Favorites>
 
-    @Insert(
-        "insert into n_article (no_id , ar_title , ar_content , ar_time) " +
-                "values (#{noId} , #{arTitle}, #{arContent} , #{arTime})"
+    @Delete(
+        "delete from n_favorites where no_id = #{noId} and ar_id = #{arId}"
     )
-    fun addArticle(noId: Int, arTitle: String, arContent: String, arTime: Timestamp): Int
+    fun deleteUserFavorite(noId: Int, arId: Int): Int?
+
+    @Insert(
+        "insert into n_article (no_id , pa_id, ar_title , ar_content , ar_time) " +
+                "values (#{noId} , #{paId} , #{arTitle}, #{arContent} , #{arTime})"
+    )
+    fun addArticle(noId: Int, paId: Int, arTitle: String, arContent: String, arTime: Timestamp): Int
 
     @Delete(
         "delete from n_article where no_id = #{noId} and ar_id = #{arId}"
@@ -60,10 +67,18 @@ interface NormalUserMapper {
 
     @Update(
         "update n_article " +
-                " set ar_title = #{arTitle} , ar_content = #{arContent} , ar_status = #{arStatus} , ar_time = #{arTime} " +
-                " where no_id = #{noId} and ar_id = #{arId}"
+                "set pa_id = #{paId} , ar_title = #{arTitle} , ar_content = #{arContent} , ar_status = #{arStatus} , ar_time = #{arTime} " +
+                "where no_id = #{noId} and ar_id = #{arId}"
     )
-    fun updateArticle(noId: Int, arId: Int, arTitle: String, arContent: String, arStatus: Int, arTime: Timestamp): Int
+    fun updateArticle(
+        noId: Int,
+        arId: Int,
+        paId: Int,
+        arTitle: String,
+        arContent: String,
+        arStatus: Int,
+        arTime: Timestamp
+    ): Int
 
 
     @Insert(
@@ -104,7 +119,7 @@ interface NormalUserMapper {
     @Update(
         "update n_report " +
                 "set re_type = #{reType} , re_Content = #{reContent}" +
-                "where no_id = #{noId} , ar_id = #{arId}"
+                "where no_id = #{noId} and ar_id = #{arId}"
     )
     fun updateReportByNoIdAndArId(noId: Int, arId: Int, reType: String, reContent: String): Int
 
@@ -112,6 +127,11 @@ interface NormalUserMapper {
         "select * from n_report where no_id = #{noId}"
     )
     fun queryReportByNoId(noId: Int): List<Report>
+
+    @Select(
+        "select * from a_partition"
+    )
+    fun queryArticlePartition(): List<Partition>
 
 
 }

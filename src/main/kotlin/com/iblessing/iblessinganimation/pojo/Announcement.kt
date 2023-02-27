@@ -10,7 +10,7 @@ import java.sql.Timestamp
 @NoArgsConstructor
 class Announcement {
     var anId: Int = 0
-    var anTime: Timestamp? = null
+    var anCreationTime: Timestamp? = null
     var anContent: String = ""
     var anTimeLimit: Int = 0
     var adId: Int = 0

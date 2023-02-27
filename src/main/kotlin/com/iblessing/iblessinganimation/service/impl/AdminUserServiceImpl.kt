@@ -26,8 +26,8 @@ class AdminUserServiceImpl : AdminUserService {
             AdUserResult(400, "002", "用户不存在", null)
         } else {
             println("用户存在条件")
-            if (Objects.equals(adminUser?.adUsername, adUserPassword)) {
-                println(adminUser?.adUsername + "登陆成功，写入登录时间")
+            if (Objects.equals(adminUser?.adUserPassword, adUserPassword)) {
+                println(adminUser?.adUsername + "登陆成功")
                 AdUserResult(200, "001", "登录成功", adminUser)
             } else {
                 println("该用户存在但密码错误")
@@ -57,7 +57,7 @@ class AdminUserServiceImpl : AdminUserService {
      */
 
     override fun addPartition(partition: Partition): AdPartitionResult? {
-        return if (mapper?.queryPartitionByPaName(partition.paName) == 0) {
+        return if (mapper?.queryPartitionByPaName(partition.paName) != null) {
             println("通过重复验证")
             AdPartitionResult(400, "400", "名称已经存在", partition, null)
         } else {
@@ -120,7 +120,7 @@ class AdminUserServiceImpl : AdminUserService {
         val leWord = lexicon.leWord
         val leCreationTime = Timestamp(System.currentTimeMillis())
         val adId = lexicon.adId
-        return if (mapper?.queryLexiconByLeWord(leWord) == 0) {
+        return if (mapper?.queryLexiconByLeWord(leWord) != null) {
             println("通过重复验证")
             AdLexiconResult(400, "400", "名称已经存在", lexicon, null)
         } else {
@@ -139,7 +139,7 @@ class AdminUserServiceImpl : AdminUserService {
     override fun deleteLexicon(lexicon: Lexicon): AdLexiconResult? {
         val leId = lexicon.leId
         return if (mapper?.deleteLexicon(leId) != 0) {
-            AdLexiconResult(500, "500", "删除成功", null, null)
+            AdLexiconResult(500, "500", "删除成功", lexicon, null)
         } else {
             AdLexiconResult(400, "400", "删除失败", lexicon, null)
         }
@@ -221,10 +221,12 @@ class AdminUserServiceImpl : AdminUserService {
     override fun addAuditor(audiUser: AudiUser): AdAuditorResult? {
         val auUsername = audiUser.auUsername
         val auUserPassword = audiUser.auUserPassword
-        return if (mapper?.queryAuditorByAuUsername(auUsername) == 0) {
+
+        return if (mapper?.queryAuditorByAuUsername(auUsername) != null) {
             println("通过重复验证")
             AdAuditorResult(400, "400", "名称已经存在", audiUser, null)
         } else {
+            println("aaa$auUserPassword")
             if (mapper?.addAuditor(auUsername, auUserPassword) != 0) {
                 AdAuditorResult(500, "500", "新增成功", audiUser, null)
             } else {
@@ -258,4 +260,27 @@ class AdminUserServiceImpl : AdminUserService {
             AdAuditorResult(400, "400", "修改失败", audiUser, null)
         }
     }
+
+    /**
+     * 管理员查询审核员审核的文章
+     */
+    override fun queryAllAuditorArticle(article: Article): AdArticleResult? {
+        return if (Objects.nonNull(mapper?.queryAllAuditorArticle(article.auId))) {
+            AdArticleResult(500, "500", "查询成功", null, mapper?.queryAllAuditorArticle(article.auId))
+        } else {
+            AdArticleResult(400, "400", "查询失败", null, null)
+        }
+    }
+
+    override fun updateAuditorArticle(article: Article): AdArticleResult? {
+        val arId = article.arId
+        val arStatus = article.arStatus
+        return if (mapper?.updateAuditorArticleByAuId(arId, arStatus) != 0) {
+            AdArticleResult(500, "500", "修改成功", article, null)
+        } else {
+            AdArticleResult(400, "400", "修改失败", article, null)
+        }
+    }
+
+
 }

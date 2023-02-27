@@ -139,4 +139,18 @@ class AdminUserController {
     fun updateAuditor(@RequestBody audiUser: AudiUser): AdAuditorResult?{
         return service?.updateAuditor(audiUser)
     }
+    /**
+     * 管理员查看审核员审核的文章
+     */
+    @RequestMapping("/queAdmArticle")
+    fun queryAuditorArticle(@RequestBody article: Article): AdArticleResult? {
+        return service?.queryAllAuditorArticle(article)
+    }
+    /**
+     * 管理员修改文章
+     */
+    @RequestMapping("/updAdmArticle")
+    fun updateAuditorArticle(@RequestBody article: Article): AdArticleResult? {
+        return service?.updateAuditorArticle(article)
+    }
 }

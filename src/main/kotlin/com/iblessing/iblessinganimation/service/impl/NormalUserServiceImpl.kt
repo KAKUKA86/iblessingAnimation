@@ -6,7 +6,6 @@ import com.iblessing.iblessinganimation.service.NormalUserService
 import com.iblessing.iblessinganimation.util.*
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
-import java.lang.System
 import java.sql.Timestamp
 import java.util.*
 
@@ -25,16 +24,16 @@ class NormalUserServiceImpl : NormalUserService {
         println("service出库 ${user?.noUsername}")
         return if (Objects.isNull(user)) {
             println("该用户不存在")
-            NoUserResult(400, "002", "用户不存在", null)
+            NoUserResult(400, "002", "用户不存在", null, null)
         } else {
             println("用户存在条件")
             if (Objects.equals(user?.noUserPassword, noUserPassword)) {
                 println(user?.noUsername + "登陆成功，写入登录时间")
                 mapper?.updateNormalUserLoginTime(noUsername, noLogin)
-                NoUserResult(200, "001", "登录成功", user)
+                NoUserResult(200, "001", "登录成功", user, null)
             } else {
                 println("该用户存在但密码错误")
-                NoUserResult(100, "002", "密码错误", null)
+                NoUserResult(100, "002", "密码错误", null, null)
             }
         }
     }
@@ -53,14 +52,14 @@ class NormalUserServiceImpl : NormalUserService {
         return if (mapper?.queryNormalUserByUserName(user.noUsername) == null) {
             val noSignIn = Timestamp(System.currentTimeMillis())
             mapper?.insertNormalUser(noUsername, noUserPassword, noUserGender, noUserBirthday, noSignIn, noUserEmail)
-            NoUserResult(200, "003", "注册成功", null)
+            NoUserResult(200, "003", "注册成功", null, null)
             /**
              * 输入用户对象
              * 需要返回值？
              */
         } else {
             println("用户名重复或服务器错误")
-            NoUserResult(100, "004", "注册失败", null)
+            NoUserResult(100, "004", "注册失败", null, null)
         }
     }
 
@@ -74,14 +73,13 @@ class NormalUserServiceImpl : NormalUserService {
         val arId: Int = favorites.arId
         val faTime = Timestamp(System.currentTimeMillis())
         val noFavorites: Favorites? = mapper?.queryNorUserFavByNoIdAndArId(noId, arId)
-        return if (Objects.isNull(noFavorites)) { //需要更改
-            println("收藏成功")
-            mapper?.addNorUserFav(noId, arId, faTime)
-            NoFavResult(200, "200", "收藏成功", noFavorites, null)
-
+        return if (Objects.isNull(noFavorites)) {
+            println("用户收藏")
+            mapper?.insertNorUserFav(noId, arId, faTime)
+            NoFavResult(200, "200", "收藏成功", favorites, null)
         } else {
-            println("收藏记录已存在或收藏失败")
-            NoFavResult(400, "400", "收藏失败", noFavorites, null)
+            println("用户取消收藏")
+            NoFavResult(100, "100", "取消收藏", null, null)
         }
 
     }
@@ -106,10 +104,11 @@ class NormalUserServiceImpl : NormalUserService {
      */
     override fun addArticle(article: Article): NoArticleResult? {
         val noId = article.noId
+        val paId = article.paId
         val arTitle = article.arTitle
         val arContent = article.arContent
         val arTime = Timestamp(System.currentTimeMillis())
-        val code = mapper?.addArticle(noId, arTitle, arContent, arTime)
+        val code = mapper?.addArticle(noId, paId, arTitle, arContent, arTime)
         return if (code != 0) {
             println("添加成功")
             article.arTime = arTime
@@ -143,12 +142,12 @@ class NormalUserServiceImpl : NormalUserService {
     override fun updateArticle(article: Article): NoArticleResult? {
         val noId = article.noId
         val arId = article.arId
+        val paId = article.paId
         val arTitle = article.arTitle
         val arContent = article.arContent
         val arStatus = 0
         val arTime = Timestamp(System.currentTimeMillis())
-
-        val newArticle = mapper?.updateArticle(noId, arId, arTitle, arContent, arStatus, arTime)
+        val newArticle = mapper?.updateArticle(noId, arId, paId, arTitle, arContent, arStatus, arTime)
         return if (newArticle != 0) {
             println("更新成功")
             article.arTime = arTime
@@ -258,7 +257,7 @@ class NormalUserServiceImpl : NormalUserService {
     }
 
     /**
-     * 通过用户ID和文章删除删除
+     * 通过用户ID和文章删除举报
      */
     override fun deleteReport(report: Report): NoReportResult? {
         val noId = report.noId
@@ -295,6 +294,22 @@ class NormalUserServiceImpl : NormalUserService {
             NoReportResult(500, "500", "查询成功", null, reportList)
         } else {
             NoReportResult(400, "400", "查询失败", null, null)
+        }
+    }
+
+    override fun queryArticlePartition(partition: Partition): NoPartitionResult? {
+        return if (Objects.nonNull(mapper?.queryArticlePartition())) {
+            NoPartitionResult(500, "500", "查询成功", mapper?.queryArticlePartition())
+        } else {
+            NoPartitionResult(400, "400", "查询失败", null)
+        }
+    }
+
+    override fun deleteUserFavorite(favorites: Favorites): NoFavResult? {
+        return if (mapper?.deleteUserFavorite(favorites.noId, favorites.arId) != 0) {
+            NoFavResult(500, "500", "删除成功", favorites, null)
+        } else {
+            NoFavResult(400, "400", "删除失败", favorites, null)
         }
     }
 
