@@ -1,11 +1,12 @@
 package com.iblessing.iblessinganimation.util
 
 import com.iblessing.iblessinganimation.pojo.Article
+import com.iblessing.iblessinganimation.pojo.Comment
 
-class AdArticleResult(
+class UtArticleAndCommentResult(
     var code: Int,
-    var statusCode: String,
+    var StatusCode: String,
     var message: String,
     var article: Article?,
-    var articles: List<Article>?
+    var commentList: List<Comment>?
 )

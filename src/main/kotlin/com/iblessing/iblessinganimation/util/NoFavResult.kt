@@ -4,11 +4,9 @@ import com.iblessing.iblessinganimation.pojo.Favorites
 
 
 class NoFavResult(
-    var statusCode: Int,
-    var code: String,
+    var code: Int,
+    var statusCode: String,
     var message: String,
     var noFavorites: Favorites?,
     var noFavoritesList: List<Favorites>?
-) {
-
-}
+)

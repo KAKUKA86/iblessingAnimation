@@ -24,16 +24,16 @@ class NormalUserServiceImpl : NormalUserService {
         println("service出库 ${user?.noUsername}")
         return if (Objects.isNull(user)) {
             println("该用户不存在")
-            NoUserResult(400, "002", "用户不存在", null, null)
+            NoUserResult(400, "400", "用户不存在", null, null)
         } else {
             println("用户存在条件")
             if (Objects.equals(user?.noUserPassword, noUserPassword)) {
                 println(user?.noUsername + "登陆成功，写入登录时间")
                 mapper?.updateNormalUserLoginTime(noUsername, noLogin)
-                NoUserResult(200, "001", "登录成功", user, null)
+                NoUserResult(200, "200", "登录成功", user, null)
             } else {
                 println("该用户存在但密码错误")
-                NoUserResult(100, "002", "密码错误", null, null)
+                NoUserResult(400, "400", "密码错误", null, null)
             }
         }
     }
@@ -46,9 +46,8 @@ class NormalUserServiceImpl : NormalUserService {
         val noUsername: String = user.noUsername
         val noUserPassword: String = user.noUserPassword
         val noUserGender: String = user.noGender
-        val noUserBirthday: String = user.noBirthday
+        val noUserBirthday: Timestamp? = user.noBirthday
         val noUserEmail: String = user.noEmail
-
         return if (mapper?.queryNormalUserByUserName(user.noUsername) == null) {
             val noSignIn = Timestamp(System.currentTimeMillis())
             mapper?.insertNormalUser(noUsername, noUserPassword, noUserGender, noUserBirthday, noSignIn, noUserEmail)
@@ -71,11 +70,12 @@ class NormalUserServiceImpl : NormalUserService {
     override fun addUserFavorite(favorites: Favorites): NoFavResult? {
         val noId: Int = favorites.noId
         val arId: Int = favorites.arId
+        val arTitle = mapper?.queryArticleByArId(arId)?.arTitle
         val faTime = Timestamp(System.currentTimeMillis())
         val noFavorites: Favorites? = mapper?.queryNorUserFavByNoIdAndArId(noId, arId)
         return if (Objects.isNull(noFavorites)) {
             println("用户收藏")
-            mapper?.insertNorUserFav(noId, arId, faTime)
+            mapper?.insertNorUserFav(noId, arId, arTitle, faTime)
             NoFavResult(200, "200", "收藏成功", favorites, null)
         } else {
             println("用户取消收藏")
@@ -112,10 +112,10 @@ class NormalUserServiceImpl : NormalUserService {
         return if (code != 0) {
             println("添加成功")
             article.arTime = arTime
-            NoArticleResult(500, "500", "添加成功", article, null)
+            NoArticleResult(500, "500", "添加成功，等待审核", article, null)
         } else {
             println("添加失败")
-            NoArticleResult(400, "400", "添加失败", null, null)
+            NoArticleResult(400, "400", "添加失败，请检查错误", null, null)
         }
     }
 
@@ -129,7 +129,7 @@ class NormalUserServiceImpl : NormalUserService {
         val code = mapper?.delArticle(noId, arId)
         return if (code != 0) {
             println("删除成功")
-            NoArticleResult(500, "500", "删除成功", article, null)
+            NoArticleResult(200, "200", "删除成功", null, null)
         } else {
             println("参数错误或删除失败")
             NoArticleResult(400, "400", "删除失败，请检查错误", null, null)
@@ -151,7 +151,7 @@ class NormalUserServiceImpl : NormalUserService {
         return if (newArticle != 0) {
             println("更新成功")
             article.arTime = arTime
-            NoArticleResult(500, "500", "更新成功，等待审核", article, null)
+            NoArticleResult(200, "200", "更新成功，等待审核", article, null)
         } else {
             println("更新失败")
             NoArticleResult(400, "400", "更新失败", article, null)
@@ -196,11 +196,10 @@ class NormalUserServiceImpl : NormalUserService {
      * 删除评论
      */
     override fun deleteComment(comment: Comment): NoComResult? {
-        val noId = comment.noId
-        val arId = comment.arId
+        val coId = comment.coId
         val time = Timestamp(System.currentTimeMillis())
         comment.coTime = time
-        return if (mapper?.delCommentByNoIdAndArId(noId, arId) != 0) {
+        return if (mapper?.delCommentByCoId(coId) != 0) {
             println("删除成功")
             NoComResult(500, "500", "删除成功,删除时间为$time", comment, null)
         } else {
@@ -212,11 +211,10 @@ class NormalUserServiceImpl : NormalUserService {
      * 更新评论
      */
     override fun updateComment(comment: Comment): NoComResult? {
-        val noId = comment.noId
-        val arId = comment.arId
+        val coId = comment.coId
         val coContent = comment.coContent
         val time = Timestamp(System.currentTimeMillis())
-        val newComment = mapper?.updateComment(noId, arId, coContent, time)
+        val newComment = mapper?.updateComment(coId, coContent, time)
         return if (newComment != 0) {
             println("修改成功")
             NoComResult(500, "500", "修改成功", comment, null)
@@ -310,6 +308,14 @@ class NormalUserServiceImpl : NormalUserService {
             NoFavResult(500, "500", "删除成功", favorites, null)
         } else {
             NoFavResult(400, "400", "删除失败", favorites, null)
+        }
+    }
+
+    override fun queryAllArticle(article: Article): NoArticleResult? {
+        return if (Objects.nonNull(mapper?.queryAllArticle())) {
+            NoArticleResult(500, "500", "成功", null, mapper?.queryAllArticle())
+        } else {
+            NoArticleResult(400, "400", "没有文章", null, null)
         }
     }
 

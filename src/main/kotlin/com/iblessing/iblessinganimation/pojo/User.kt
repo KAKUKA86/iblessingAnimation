@@ -13,7 +13,7 @@ class User {
     var noUsername: String = ""
     var noUserPassword: String = ""
     var noGender: String = ""
-    var noBirthday: String = ""
+    var noBirthday: Timestamp? = null
     var noSignIn: Timestamp? = null
     var noLogin: Timestamp? = null
     var noUserExp: Int = 0

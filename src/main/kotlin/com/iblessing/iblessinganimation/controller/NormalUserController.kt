@@ -5,9 +5,10 @@ import com.iblessing.iblessinganimation.service.NormalUserService
 import com.iblessing.iblessinganimation.util.*
 import jakarta.annotation.Resource
 import org.springframework.web.bind.annotation.*
+import java.sql.Timestamp
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = ["*"], maxAge = 3600)
 @RequestMapping("/noUser")
 class NormalUserController {
     @Resource
@@ -26,7 +27,7 @@ class NormalUserController {
     /**
      * 普通用户注册
      */
-    @PostMapping("/signIn")
+    @RequestMapping("/signIn")
     fun userSignIn(@RequestBody user: User): NoUserResult? {
         return service?.normalUserSignIn(user)
     }
@@ -71,7 +72,7 @@ class NormalUserController {
     /**
      * 用户删除文章
      */
-    @DeleteMapping("/delArt")
+    @PostMapping("/delArt")
     fun delArticle(@RequestBody article: Article): NoArticleResult? {
         return service?.deleteArticle(article)
     }
@@ -91,7 +92,13 @@ class NormalUserController {
     fun queryArticle(@RequestBody article: Article): NoArticleResult? {
         return service?.queryArticle(article)
     }
-
+    /**
+     * 文章查询
+     */
+    @RequestMapping("/queAllArt")
+    fun queryAllArticle(@RequestBody article: Article): NoArticleResult? {
+        return service?.queryAllArticle(article)
+    }
     /**
      * 用户新增对文章评论
      */

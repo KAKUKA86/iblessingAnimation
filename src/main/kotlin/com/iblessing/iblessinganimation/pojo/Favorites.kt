@@ -12,5 +12,6 @@ class Favorites {
     var faId: Int = 0
     var noId: Int = 0
     var arId: Int = 0
+    var arTitle: String = ""
     var faTime: Timestamp? = null
 }

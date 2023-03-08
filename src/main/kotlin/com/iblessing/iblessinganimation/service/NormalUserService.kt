@@ -24,6 +24,7 @@ interface NormalUserService {
     fun queryReportByNoId(report: Report): NoReportResult?
     fun queryArticlePartition(partition: Partition): NoPartitionResult?
     fun deleteUserFavorite(favorites: Favorites): NoFavResult?
+    fun queryAllArticle(article: Article): NoArticleResult?
 
 
 }

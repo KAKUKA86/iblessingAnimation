@@ -17,7 +17,7 @@ interface NormalUserMapper {
         noUsername: String,
         noUserPassword: String,
         noGender: String,
-        noBirthday: String,
+        noBirthday: Timestamp?,
         noSignIn: Timestamp,
         noEmail: String
     )
@@ -33,10 +33,10 @@ interface NormalUserMapper {
     fun queryNorUserFavByNoIdAndArId(noId: Int, arId: Int): Favorites
 
     @Insert(
-        "insert into n_favorites (no_id , ar_id , fa_time) " +
-                "values (#{noId} , #{arId} , #{faTime})"
+        "insert into n_favorites (no_id, ar_id, ar_title, fa_time) " +
+                "values (#{noId}, #{arId}, #{arTitle}, #{faTime})"
     )
-    fun insertNorUserFav(noId: Int, arId: Int, faTime: Timestamp)
+    fun insertNorUserFav(noId: Int, arId: Int, arTitle: String?, faTime: Timestamp)
 
 
     @Select(
@@ -89,16 +89,16 @@ interface NormalUserMapper {
     fun addComment(noId: Int, arId: Int, coContent: String, coTime: Timestamp): Int
 
     @Delete(
-        "delete from n_comment where no_id = #{noId} and ar_id = #{arId}"
+        "delete from n_comment where co_id = #{coId}"
     )
-    fun delCommentByNoIdAndArId(noId: Int, arId: Int): Int
+    fun delCommentByCoId(coId: Int): Int
 
     @Update(
         "update n_comment " +
                 "set co_content = #{coContent} , co_time = #{coTime} " +
-                "where no_id = #{noId} and ar_id = #{arId}"
+                "where co_id = #{coId}"
     )
-    fun updateComment(noId: Int, arId: Int, coContent: String, coTime: Timestamp): Int
+    fun updateComment(coId: Int, coContent: String, coTime: Timestamp): Int
 
     @Select(
         "select * from n_comment where no_id = #{noId}"
@@ -132,6 +132,16 @@ interface NormalUserMapper {
         "select * from a_partition"
     )
     fun queryArticlePartition(): List<Partition>
+
+    @Select(
+        "select * from n_article where ar_status = 2"
+    )
+    fun queryAllArticle(): List<Article>
+
+    @Select(
+        "select * from n_article where ar_id = #{arId}"
+    )
+    fun queryArticleByArId(arId: Int): Article
 
 
 }
