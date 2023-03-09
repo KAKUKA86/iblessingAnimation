@@ -11,4 +11,5 @@ class AdminUser {
     var adId: Int = 0
     var adUsername: String = ""
     var adUserPassword: String = ""
+    val aCode: Int = 1
 }

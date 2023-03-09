@@ -47,7 +47,12 @@ interface NormalUserMapper {
     @Delete(
         "delete from n_favorites where no_id = #{noId} and ar_id = #{arId}"
     )
-    fun deleteUserFavorite(noId: Int, arId: Int): Int?
+    fun deleteUserFavoriteByNoIdAndArId(noId: Int, arId: Int): Int
+
+    @Delete(
+        "delete from n_favorites where fa_id = #{faId}"
+    )
+    fun deleteUserFavoriteByFaId(faId: Int): Int?
 
     @Insert(
         "insert into n_article (no_id , pa_id, ar_title , ar_content , ar_time) " +
@@ -142,6 +147,13 @@ interface NormalUserMapper {
         "select * from n_article where ar_id = #{arId}"
     )
     fun queryArticleByArId(arId: Int): Article
+    @Update(
+        "update n_user " +
+                "set no_username = #{noUsername} , no_user_password = #{noUserPassword} , no_gender = #{noGender} , no_email = #{noEmail} " +
+                "where no_id = #{noId}"
+    )
+    fun updateUser(noId: Int, noUsername: String, noUserPassword: String, noGender: String, noEmail: String): Int
+
 
 
 }

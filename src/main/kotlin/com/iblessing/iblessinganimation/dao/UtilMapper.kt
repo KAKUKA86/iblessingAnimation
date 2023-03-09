@@ -12,4 +12,6 @@ interface UtilMapper {
 
     @Select("select * from n_comment where ar_id = #{arId}")
     fun showCommentByArId(arId: Int): List<Comment>?
+    @Select("select count(*) from n_article where pa_id = #{paId}")
+    fun showArticleCountByPaId(paId: Int): Int?
 }

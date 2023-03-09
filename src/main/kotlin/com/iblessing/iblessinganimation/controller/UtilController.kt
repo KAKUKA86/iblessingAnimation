@@ -4,6 +4,7 @@ import com.iblessing.iblessinganimation.pojo.Article
 import com.iblessing.iblessinganimation.service.UtilService
 import com.iblessing.iblessinganimation.util.NoArticleResult
 import com.iblessing.iblessinganimation.util.UtArticleAndCommentResult
+import com.iblessing.iblessinganimation.util.UtilResult
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -26,6 +27,11 @@ class UtilController {
     @RequestMapping("/queArticleAndCommentByArId")
     fun showArticleAndCommentByArId(@RequestBody article: Article) : UtArticleAndCommentResult? {
         return service?.showArticleAndCommentByArId(article.arId)
+    }
+    //通过分区编号查询文章数量
+    @RequestMapping("/queArticleCountByPaId")
+    fun showArticleCountByPaId(@RequestBody article: Article) : UtilResult? {
+        return service?.showArticleCountByPaId(article)
     }
 
 }

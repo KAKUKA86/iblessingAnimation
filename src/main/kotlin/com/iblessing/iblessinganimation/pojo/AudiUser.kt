@@ -11,5 +11,6 @@ class AudiUser {
     var auId: Int = 0
     var auUsername: String = ""
     var auUserPassword: String = ""
+    val aCode: Int = 2
 
 }

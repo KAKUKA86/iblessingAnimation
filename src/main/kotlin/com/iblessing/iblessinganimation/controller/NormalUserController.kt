@@ -50,9 +50,14 @@ class NormalUserController {
     /**
      * 删除普通用户收藏表
      */
-    @RequestMapping("/delFavorite")
+    @RequestMapping("/delFavoriteByFaId")
     fun delUserFavorite(@RequestBody favorites: Favorites): NoFavResult? {
-        return service?.deleteUserFavorite(favorites)
+        return service?.deleteUserFavoriteByFaId(favorites)
+    }
+
+    @PostMapping("/delFavoriteByNoIdAndArtId")
+    fun delUserFavoriteByNoIdAndArtId(@RequestBody favorites: Favorites): NoFavResult? {
+        return service?.deleteUserFavoriteByNoIdAndArtId(favorites)
     }
     /**
      * 用户查询文章分区
@@ -162,6 +167,13 @@ class NormalUserController {
     @RequestMapping("/queReport")
     fun queReport(@RequestBody report: Report): NoReportResult? {
         return service?.queryReportByNoId(report)
+    }
+    /**
+     * 用户更新信息
+     */
+    @PostMapping("/updUser")
+    fun updUser(@RequestBody user: User): NoUserResult? {
+        return service?.updateUser(user)
     }
 
 

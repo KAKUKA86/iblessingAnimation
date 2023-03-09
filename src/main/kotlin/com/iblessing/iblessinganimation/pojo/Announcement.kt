@@ -11,6 +11,7 @@ import java.sql.Timestamp
 class Announcement {
     var anId: Int = 0
     var anCreationTime: Timestamp? = null
+    var anTitle:String = ""
     var anContent: String = ""
     var anTimeLimit: Int = 0
     var adId: Int = 0

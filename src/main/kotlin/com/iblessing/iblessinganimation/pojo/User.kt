@@ -18,4 +18,5 @@ class User {
     var noLogin: Timestamp? = null
     var noUserExp: Int = 0
     var noEmail: String = ""
+    val aCode: Int = 3
 }

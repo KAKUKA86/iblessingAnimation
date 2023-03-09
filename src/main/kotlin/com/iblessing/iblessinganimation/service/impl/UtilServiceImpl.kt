@@ -5,6 +5,7 @@ import com.iblessing.iblessinganimation.pojo.Article
 import com.iblessing.iblessinganimation.service.UtilService
 import com.iblessing.iblessinganimation.util.NoArticleResult
 import com.iblessing.iblessinganimation.util.UtArticleAndCommentResult
+import com.iblessing.iblessinganimation.util.UtilResult
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
 
@@ -26,5 +27,13 @@ class UtilServiceImpl : UtilService {
             return UtArticleAndCommentResult(200, "OK", "查询成功", it, mapper?.showCommentByArId(arId))
         }
         return UtArticleAndCommentResult(404, "Not Found", "查询失败", null, null)
+    }
+
+    override fun showArticleCountByPaId(article: Article): UtilResult? {
+        return if (mapper?.showArticleCountByPaId(article.paId) != null) {
+            UtilResult(200, "OK", "查询成功", mapper?.showArticleCountByPaId(article.paId))
+        } else {
+            UtilResult(404, "Not Found", "查询失败", null)
+        }
     }
 }

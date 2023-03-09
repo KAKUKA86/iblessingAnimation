@@ -65,10 +65,10 @@ interface AdminUserMapper {
     fun queryAllAnnouncement(): List<Announcement>
 
     @Insert(
-        "insert into a_announcement (an_content , an_creation_time , ad_id , an_time_limit)" +
-                "values (#{anContent} , #{anCreationTime} , #{adId} , #{anTimeLimit})"
+        "insert into a_announcement (an_title , an_content , an_creation_time , ad_id , an_time_limit)" +
+                "values (#{anTitle} , #{anContent} , #{anCreationTime} , #{adId} , #{anTimeLimit})"
     )
-    fun addAnnouncement(anContent: String, anCreationTime: Timestamp, adId: Int, anTimeLimit: Int): Int
+    fun addAnnouncement(anTitle: String, anContent: String, anCreationTime: Timestamp, adId: Int, anTimeLimit: Int): Int
 
     @Delete(
         "delete from a_announcement " +
@@ -107,6 +107,7 @@ interface AdminUserMapper {
         "select * from n_article where au_id = #{auId}"
     )
     fun queryAllAuditorArticle(auId: Int): List<Article>
+
     @Update(
         "update n_article " +
                 "set ar_status = #{arStatus} " +

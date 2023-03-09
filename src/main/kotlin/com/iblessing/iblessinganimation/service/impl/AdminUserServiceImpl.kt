@@ -178,11 +178,12 @@ class AdminUserServiceImpl : AdminUserService {
      */
 
     override fun addAnnouncement(announcement: Announcement): AdAnnounceResult? {
+        val anTitle = announcement.anTitle
         val anContent = announcement.anContent
         val anCreationTime = Timestamp(System.currentTimeMillis())
         val adId = announcement.adId
         val anTimeLimit = announcement.anTimeLimit
-        return if (mapper?.addAnnouncement(anContent, anCreationTime, adId, anTimeLimit) != 0) {
+        return if (mapper?.addAnnouncement(anTitle,anContent, anCreationTime, adId, anTimeLimit) != 0) {
             AdAnnounceResult(500, "500", "新增成功", announcement, null)
         } else {
             AdAnnounceResult(400, "400", "新增失败", announcement, null)

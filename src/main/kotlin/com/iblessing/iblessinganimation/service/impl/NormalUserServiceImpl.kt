@@ -79,7 +79,8 @@ class NormalUserServiceImpl : NormalUserService {
             NoFavResult(200, "200", "收藏成功", favorites, null)
         } else {
             println("用户取消收藏")
-            NoFavResult(100, "100", "取消收藏", null, null)
+            mapper?.deleteUserFavoriteByNoIdAndArId(noId, arId)
+            NoFavResult(400, "400", "取消收藏成功", null, null)
         }
 
     }
@@ -303,8 +304,16 @@ class NormalUserServiceImpl : NormalUserService {
         }
     }
 
-    override fun deleteUserFavorite(favorites: Favorites): NoFavResult? {
-        return if (mapper?.deleteUserFavorite(favorites.noId, favorites.arId) != 0) {
+    override fun deleteUserFavoriteByFaId(favorites: Favorites): NoFavResult? {
+        return if (mapper?.deleteUserFavoriteByFaId(favorites.faId) != 0) {
+            NoFavResult(500, "500", "删除成功", favorites, null)
+        } else {
+            NoFavResult(400, "400", "删除失败", favorites, null)
+        }
+    }
+
+    override fun deleteUserFavoriteByNoIdAndArtId(favorites: Favorites): NoFavResult? {
+        return if (mapper?.deleteUserFavoriteByNoIdAndArId(favorites.noId, favorites.arId) != 0) {
             NoFavResult(500, "500", "删除成功", favorites, null)
         } else {
             NoFavResult(400, "400", "删除失败", favorites, null)
@@ -316,6 +325,14 @@ class NormalUserServiceImpl : NormalUserService {
             NoArticleResult(500, "500", "成功", null, mapper?.queryAllArticle())
         } else {
             NoArticleResult(400, "400", "没有文章", null, null)
+        }
+    }
+
+    override fun updateUser(user: User): NoUserResult? {
+        return if (mapper?.updateUser(user.noId,user.noUsername,user.noUserPassword,user.noGender,user.noEmail) != 0) {
+            NoUserResult(500, "500", "修改成功", user, null)
+        } else {
+            NoUserResult(400, "400", "修改失败", user, null)
         }
     }
 
