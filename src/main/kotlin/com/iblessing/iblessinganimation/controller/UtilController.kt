@@ -1,6 +1,7 @@
 package com.iblessing.iblessinganimation.controller
 
 import com.iblessing.iblessinganimation.pojo.Article
+import com.iblessing.iblessinganimation.pojo.Like
 import com.iblessing.iblessinganimation.service.UtilService
 import com.iblessing.iblessinganimation.util.NoArticleResult
 import com.iblessing.iblessinganimation.util.UtArticleAndCommentResult
@@ -32,6 +33,20 @@ class UtilController {
     @RequestMapping("/queArticleCountByPaId")
     fun showArticleCountByPaId(@RequestBody article: Article) : UtilResult? {
         return service?.showArticleCountByPaId(article)
+    }
+    /**
+     * 查询点赞次数
+     */
+    @RequestMapping("/queLikeCountByNoIdAndArId")
+    fun showLikeCountByNoIdAndArId(@RequestBody like: Like) : UtilResult? {
+        return service?.showLikeCountByNoIdAndArId(like)
+    }
+    /**
+     * 增加点赞记录
+     */
+    @RequestMapping("/addLike")
+    fun addLike(@RequestBody like: Like) : UtilResult? {
+        return service?.addLike(like)
     }
 
 }

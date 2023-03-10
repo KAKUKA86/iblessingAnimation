@@ -15,6 +15,7 @@ class Article {
     var arTitle: String = ""
     var arContent: String = ""
     var arTime: Timestamp? = null
+    var arLike: Int = 0
     var arView: Int = 0
     var arStatus: Int = 0
     var auId: Int = 0

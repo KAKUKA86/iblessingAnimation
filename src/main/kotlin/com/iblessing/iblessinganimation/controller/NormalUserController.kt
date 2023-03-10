@@ -175,6 +175,18 @@ class NormalUserController {
     fun updUser(@RequestBody user: User): NoUserResult? {
         return service?.updateUser(user)
     }
-
-
+    /**
+     * 用户给文章点赞
+     */
+    @PostMapping("/addArtLike")
+    fun addArtLike(@RequestBody article: Article): NoArticleResult? {
+        return service?.addArtLike(article)
+    }
+    /**
+     * 查询系统信息
+     */
+    @GetMapping("/queAnnouncement")
+    fun queAnnouncement():AdAnnounceResult?{
+        return service?.queryAnn()
+    }
 }

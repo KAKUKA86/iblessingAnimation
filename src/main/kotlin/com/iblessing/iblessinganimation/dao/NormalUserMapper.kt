@@ -153,7 +153,25 @@ interface NormalUserMapper {
                 "where no_id = #{noId}"
     )
     fun updateUser(noId: Int, noUsername: String, noUserPassword: String, noGender: String, noEmail: String): Int
+    /**
+     *  所选文章的点赞次数加1
+     */
 
-
-
+    @Update(
+        "update n_article set ar_like = ar_like + 1 where ar_id = #{arId}"
+    )
+    fun addArtLike(arId: Int): Int
+    @Select(
+        "select no_user_status from n_user where no_id = #{noId}"
+    )
+    fun queryNormalUserStatus(noId: Int): Int
+    //举报次数加1
+    @Update(
+     "update n_user set no_report_count = no_report_count + 1 where no_id = #{noId}"
+    )
+    fun addNoUserReportCount(noId: Int?)
+    @Select(
+        "select * from a_announcement"
+    )
+    fun queryAnn(): List<Announcement>
 }

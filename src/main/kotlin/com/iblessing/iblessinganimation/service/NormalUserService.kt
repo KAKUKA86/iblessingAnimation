@@ -27,8 +27,8 @@ interface NormalUserService {
     fun deleteUserFavoriteByNoIdAndArtId(favorites: Favorites): NoFavResult?
     fun queryAllArticle(article: Article): NoArticleResult?
     fun updateUser(user: User): NoUserResult?
-
-
+    fun addArtLike(article: Article): NoArticleResult?
+    fun queryAnn(): AdAnnounceResult? //查询公告
 }
 
 

@@ -6,6 +6,6 @@ class AuUserResult(
     var code: Int,
     var statusCode: String,
     var message: String,
-    var audiUSer: AudiUser?,
+    var audiUser: AudiUser?,
     var audiUserList: List<AudiUser>?
 )

@@ -3,6 +3,7 @@ package com.iblessing.iblessinganimation.service.impl
 import com.iblessing.iblessinganimation.dao.AuditorUserMapper
 import com.iblessing.iblessinganimation.pojo.Article
 import com.iblessing.iblessinganimation.pojo.AudiUser
+import com.iblessing.iblessinganimation.pojo.User
 import com.iblessing.iblessinganimation.service.AuditorUserService
 import com.iblessing.iblessinganimation.util.AuUserResult
 import com.iblessing.iblessinganimation.util.NoArticleResult
@@ -82,6 +83,30 @@ class AuditorUserServiceImpl : AuditorUserService {
             NoUserResult(400, "002", "用户不存在", null, null)
         } else {
             NoUserResult(200, "001", "查询成功", null, mapper?.queryUserByTime(nowTime))
+        }
+    }
+
+    override fun queAllUser(): NoUserResult? {
+        return if (Objects.isNull(mapper?.queryAllUser())) {
+            NoUserResult(400, "error", "用户不存在", null, null)
+        } else {
+            NoUserResult(200, "ok", "查询成功", null, mapper?.queryAllUser())
+        }
+    }
+
+    override fun banUser(user: User): NoUserResult? {
+        return if (mapper?.banUser(user.noId) == 1) {
+            NoUserResult(200, "ok", "修改成功", user, null)
+        } else {
+            NoUserResult(400, "error", "修改失败", null, null)
+        }
+    }
+
+    override fun unBanUser(user: User): NoUserResult? {
+        return if (mapper?.noBanUser(user.noId) == 1) {
+            NoUserResult(200, "ok", "修改成功", user, null)
+        } else {
+            NoUserResult(400, "error", "修改失败", null, null)
         }
     }
 

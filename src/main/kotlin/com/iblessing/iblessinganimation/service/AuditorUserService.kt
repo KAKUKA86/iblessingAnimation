@@ -16,5 +16,8 @@ interface AuditorUserService {
     fun delAudiArticle(article: Article): NoArticleResult?
     fun queArticle(article: Article): NoArticleResult?
     fun queUserByTime(): NoUserResult?
+    fun queAllUser(): NoUserResult?
+    fun banUser(user: User): NoUserResult?
+    fun unBanUser(user: User): NoUserResult?
 
 }

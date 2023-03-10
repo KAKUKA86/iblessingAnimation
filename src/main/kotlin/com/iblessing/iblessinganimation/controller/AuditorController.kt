@@ -2,15 +2,13 @@ package com.iblessing.iblessinganimation.controller
 
 import com.iblessing.iblessinganimation.pojo.Article
 import com.iblessing.iblessinganimation.pojo.AudiUser
+import com.iblessing.iblessinganimation.pojo.User
 import com.iblessing.iblessinganimation.service.AuditorUserService
 import com.iblessing.iblessinganimation.util.AuUserResult
 import com.iblessing.iblessinganimation.util.NoArticleResult
 import com.iblessing.iblessinganimation.util.NoUserResult
 import jakarta.annotation.Resource
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin
@@ -55,7 +53,27 @@ class AuditorController {
     fun delAuArticle(@RequestBody article: Article): NoArticleResult? {
         return service?.delAudiArticle(article)
     }
-
+    /**
+     * 审核员查询所有用户
+     */
+    @RequestMapping("/queAllUser")
+    fun queAllUser(): NoUserResult? {
+        return service?.queAllUser()
+    }
+    /**
+     * 审核员封禁用户
+     */
+    @PostMapping("/banUser")
+    fun updUser(@RequestBody user: User): NoUserResult? {
+        return service?.banUser(user)
+    }
+    /**
+     * 审核员解封用户
+     */
+    @PostMapping("/unBanUser")
+    fun unBanUser(@RequestBody user: User): NoUserResult? {
+        return service?.unBanUser(user)
+    }
     /**
      * 审核员通过用户登录时间差>1年查询用户
      */

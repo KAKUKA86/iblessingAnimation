@@ -25,4 +25,10 @@ interface AuditorUserMapper {
     fun queryAllArticle(): List<Article>?
     @Select("select * from n_user where timestampdiff(day, no_login, #{noLogin}) > 365")
     fun queryUserByTime(noLogin:Timestamp): List<User>?
+    @Select("select * from n_user")
+    fun queryAllUser(): List<User>?
+    @Update("update n_user set no_user_status = 1 where no_id = #{noId} and no_user_status = 0")
+    fun banUser(noId: Int): Int
+    @Update("update n_user set no_user_status = 0 where no_id = #{noId} and no_user_status = 1")
+    fun noBanUser(noId: Int): Int
 }

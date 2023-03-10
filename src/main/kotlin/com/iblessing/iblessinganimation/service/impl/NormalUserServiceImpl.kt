@@ -20,21 +20,20 @@ class NormalUserServiceImpl : NormalUserService {
     override fun normalUserLogin(noUsername: String, noUserPassword: String): NoUserResult {
         println("service处 $noUsername")
         val user: User? = mapper?.queryNormalUserByUserName(noUsername)
-        val noLogin = Timestamp(System.currentTimeMillis())
+        val noLoginTime = Timestamp(System.currentTimeMillis())
         println("service出库 ${user?.noUsername}")
         return if (Objects.isNull(user)) {
-            println("该用户不存在")
-            NoUserResult(400, "400", "用户不存在", null, null)
+            //用户不存在
+            NoUserResult(400, "false", "用户不存在", null, null)
+        } else if (mapper?.queryNormalUserStatus(user?.noId ?: 0) == 1) {
+            NoUserResult(400, "false", "账号已被封禁，请联系管理员", null, null)
+        } else if (user?.noUserPassword == noUserPassword) {
+            //密码正确
+            mapper?.updateNormalUserLoginTime(user.noUsername, noLoginTime)
+            NoUserResult(200, "true", "登录成功", user, null)
         } else {
-            println("用户存在条件")
-            if (Objects.equals(user?.noUserPassword, noUserPassword)) {
-                println(user?.noUsername + "登陆成功，写入登录时间")
-                mapper?.updateNormalUserLoginTime(noUsername, noLogin)
-                NoUserResult(200, "200", "登录成功", user, null)
-            } else {
-                println("该用户存在但密码错误")
-                NoUserResult(400, "400", "密码错误", null, null)
-            }
+            //密码错误
+            NoUserResult(400, "false", "密码错误", null, null)
         }
     }
 
@@ -249,6 +248,7 @@ class NormalUserServiceImpl : NormalUserService {
         val reContent = report.reContent
         //直接添加
         return if (mapper?.addReport(noId, arId, reType, reContent) != 0) {
+            mapper?.addNoUserReportCount((mapper?.queryArticleByArId(arId)?.noId))//找到一个文章对象
             NoReportResult(500, "500", "添加成功", null, null)
         } else {
             NoReportResult(400, "400", "添加失败", null, null)
@@ -329,10 +329,36 @@ class NormalUserServiceImpl : NormalUserService {
     }
 
     override fun updateUser(user: User): NoUserResult? {
-        return if (mapper?.updateUser(user.noId,user.noUsername,user.noUserPassword,user.noGender,user.noEmail) != 0) {
+        return if (mapper?.updateUser(
+                user.noId,
+                user.noUsername,
+                user.noUserPassword,
+                user.noGender,
+                user.noEmail
+            ) != 0
+        ) {
             NoUserResult(500, "500", "修改成功", user, null)
         } else {
             NoUserResult(400, "400", "修改失败", user, null)
+        }
+    }
+
+    /**
+     * 新增点赞
+     */
+    override fun addArtLike(article: Article): NoArticleResult? {
+        return if (mapper?.addArtLike(article.arId) != 0) {
+            NoArticleResult(200, "ok", "点赞成功", article, null)
+        } else {
+            NoArticleResult(400, "400", "点赞失败", article, null)
+        }
+    }
+
+    override fun queryAnn(): AdAnnounceResult? {
+        return if (Objects.nonNull(mapper?.queryAnn())) {
+            AdAnnounceResult(200, "ok", "查询成功", null,mapper?.queryAnn())
+        } else {
+            AdAnnounceResult(400, "400", "查询失败", null,null)
         }
     }
 
