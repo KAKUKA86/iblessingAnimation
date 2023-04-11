@@ -2,8 +2,10 @@ package com.iblessing.iblessinganimation.service
 
 import com.iblessing.iblessinganimation.pojo.Article
 import com.iblessing.iblessinganimation.pojo.Like
+import com.iblessing.iblessinganimation.pojo.View
 import com.iblessing.iblessinganimation.util.NoArticleResult
 import com.iblessing.iblessinganimation.util.UtArticleAndCommentResult
+import com.iblessing.iblessinganimation.util.UtViewResult
 import com.iblessing.iblessinganimation.util.UtilResult
 import org.springframework.stereotype.Service
 
@@ -14,4 +16,7 @@ interface UtilService {
     fun showArticleCountByPaId(article: Article): UtilResult?
     fun showLikeCountByNoIdAndArId(like: Like): UtilResult?
     fun addLike(like: Like): UtilResult?
+    fun showViewByNoIdAndArId(view: View): UtViewResult?
+    fun addView(view: View): UtViewResult?
+    fun addViewCount(article: Article): UtilResult?
 }

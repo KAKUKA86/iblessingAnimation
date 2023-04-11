@@ -2,9 +2,11 @@ package com.iblessing.iblessinganimation.controller
 
 import com.iblessing.iblessinganimation.pojo.Article
 import com.iblessing.iblessinganimation.pojo.Like
+import com.iblessing.iblessinganimation.pojo.View
 import com.iblessing.iblessinganimation.service.UtilService
 import com.iblessing.iblessinganimation.util.NoArticleResult
 import com.iblessing.iblessinganimation.util.UtArticleAndCommentResult
+import com.iblessing.iblessinganimation.util.UtViewResult
 import com.iblessing.iblessinganimation.util.UtilResult
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Controller
@@ -48,5 +50,26 @@ class UtilController {
     fun addLike(@RequestBody like: Like) : UtilResult? {
         return service?.addLike(like)
     }
+    /**
+     * 查询浏览记录
+     */
+    @RequestMapping("/queViewByNoIdAndArId")
+    fun showViewByNoIdAndArId(@RequestBody view: View) : UtViewResult?{
+        return service?.showViewByNoIdAndArId(view)
+    }
+    /**
+     * 新增浏览记录
+     */
+    @RequestMapping("/addView")
+    fun addView(@RequestBody view: View) : UtViewResult?{
+        return service?.addView(view)
+    }
 
+    /**
+     * 文章表添加浏览次数
+     */
+    @RequestMapping("/addViewCount")
+    fun addViewCount(@RequestBody article: Article) : UtilResult?{
+        return service?.addViewCount(article)
+    }
 }
