@@ -2,11 +2,10 @@ package com.iblessing.iblessinganimation.util
 
 import com.iblessing.iblessinganimation.pojo.User
 
-
-class NoUserResult(
-    var code: Int,
-    var statusCode: String,
+class UserResult(
+    var code: String,
+    var statusCode: Int,
     var message: String,
     var user: User?,
-    var userList: List<User>?
+    var userList: List<User>?,
 )
